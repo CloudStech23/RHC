@@ -76,7 +76,7 @@ function submitForm() {
     var formData = new FormData(document.getElementById("sub-form"));
 
     fetch(document.getElementById("sub-form").getAttribute("action"), {
-      method: "POSTs",
+      method: "POST",
       body: formData,
     })
       .then((response) => {
