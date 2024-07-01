@@ -148,6 +148,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     });
 });
+
+// Add this script to your index.html file or include it in a separate script file
+
+// Redirect to clean URLs
+if (location.pathname.endsWith('.html')) {
+    var path = location.pathname.replace('.html', '');
+    history.replaceState({}, null, path);
+}
+
               
 
 
