@@ -181,99 +181,90 @@ function contact() {
   var emailError = document.getElementById("errorEmail");
   var messageError = document.getElementById("errorMessage");
   var errorPhone = document.getElementById("errorPhone");
+  var problemError = document.getElementById("Problemerrortype");
 
   if (inputName.trim() === "") {
-    nameError.innerHTML = "Please enter your name.";
-    isValid = false;
+      nameError.innerHTML = "Please enter your name.";
+      isValid = false;
   } else {
-    nameError.innerHTML = "";
+      nameError.innerHTML = "";
   }
   if (inputEmail.trim() === "") {
-    emailError.innerHTML = "Please enter your email.";
-    isValid = false;
+      emailError.innerHTML = "Please enter your email.";
+      isValid = false;
   } else {
-    emailError.innerHTML = "";
+      emailError.innerHTML = "";
   }
   if (inputMessage.trim() === "") {
-    messageError.innerHTML = "Please enter your message.";
-    isValid = false;
+      messageError.innerHTML = "Please enter your message.";
+      isValid = false;
   } else {
-    messageError.innerHTML = "";
+      messageError.innerHTML = "";
   }
   if (inputPhone.trim() === "") {
-    errorPhone.innerHTML = "Please enter your Contact Number.";
-    isValid = false;
+      errorPhone.innerHTML = "Please enter your Contact Number.";
+      isValid = false;
   } else {
-    errorPhone.innerHTML = "";
+      errorPhone.innerHTML = "";
   }
-  //
   if (ProblemType === "default") {
-    isValid = false;
-    document.getElementById("Problemerrortype").innerText =
-      "Please select a Type.";
+      problemError.innerText = "Please select a Type.";
+      isValid = false;
   } else {
-    document.getElementById("Problemerrortype").innerText = "";
+      problemError.innerText = "";
   }
 
   if (isValid) {
-    document.getElementById("submitButton").value = "Wait a Second..";
-    var formData = new FormData(document.getElementById("sub-form"));
+      document.getElementById("submitButton").value = "Wait a Second..";
+      var formData = new FormData(document.getElementById("sub-form"));
 
-    fetch(document.getElementById("sub-form").getAttribute("action"), {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.text();
+      fetch(document.getElementById("sub-form").getAttribute("action"), {
+          method: "POST",
+          body: formData,
       })
-
+      .then((response) => {
+          if (!response.ok) {
+              throw new Error("Network response was not ok");
+          }
+          return response.text();
+      })
       .then((data) => {
-        emailjs.init("MDsHAvuWwia9ZwLmJ");
-        console.log(data); // Log success message
+          console.log(data); // Log success message
 
-        emailjs
-          .send("service_3qh3ogr", "template_z41537p", {
-            // emailjs account created by cloudstry account {usolanki@cloudstrytech.com}
-            name: inputName,
-            email: inputEmail,
-            phone: inputPhone,
-            title3: ProblemType,
-            subject: inputSubject,
-            message: inputMessage,
+          emailjs.send("service_3qh3ogr", "template_z41537p", {
+              name: inputName,
+              email: inputEmail,
+              phone: inputPhone,
+              title3: ProblemType,
+              subject: inputSubject,
+              message: inputMessage,
           })
-          .then(function (response) {
-            console.log(
-              "Admin notification email sent successfully:",
-              response
-            );
-            document.getElementById("sub-form").innerHTML = `
-                <div class="submission-success">
-                    <h2 class='text-center'>Thank you, submission is successful!</h2>
-                    <p class='text-center'>We will connect with you soon <i class="fa fa-envelope me-2"></i></p>
-                </div>`;
-            // Optionally handle success
+          .then((response) => {
+              console.log("Admin notification email sent successfully:", response);
+              document.getElementById("sub-form").innerHTML = `
+                  <div class="submission-success">
+                      <h2 class='text-center'>Thank you, submission is successful!</h2>
+                      <p class='text-center'>We will connect with you soon <i class="fa fa-envelope me-2"></i></p>
+                  </div>`;
           });
       })
       .catch((error) => {
-        console.log("Error in Sending data", error);
-        document.getElementById(
-          "sub-form"
-        ).innerHTML = `<div class="submission-success">
+          console.log("Error in Sending data", error);
+          document.getElementById("sub-form").innerHTML = `
+            <div class="submission-success">
                 <h2 class='text-center'>It seems there was an error processing your form submission!</h2>
                 <p class='text-center'>Please try again or contact us directly so we can assist you further</p>
                 <p class='item-center'><a href='mailto:info@rapidhealthconnect.org' class='btn btn-primary text-center'>Mail-Us</a></p>
             </div>`;
-        emailjs.init("9y2-7nt7W0n40tp2k");
-        emailjs.send("service_nywgfzp", "template_5oej7kb", {
-          subject: "There was an Error in Sending the Form data",
-          message: `Hello RHC.org, we regret to inform that due to technical glitch we are not able to reach the user's data <b>(Contact Form)</b> to you, please contact the technical team as soon as possible, Thank you.`,
-          email: inputEmail,
-        });
+          emailjs.send("service_nywgfzp", "template_5oej7kb", {
+            subject: "There was an Error in Sending the Form data",
+            message: `Hello RHC.org, we regret to inform that due to technical glitch we are not able to reach the user's data <b>(Contact Form)</b> to you, please contact the technical team as soon as possible, Thank you.`,
+            email: inputEmail,
+          });
       });
   }
 
   return false; // Prevent default form submission
 }
+ 
+
