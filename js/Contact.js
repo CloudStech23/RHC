@@ -89,6 +89,7 @@ function contact() {
                   <p class='text-center'>Please try again or contact us directly so we can assist you further</p>
                   <p class='item-center'><a href='mailto:info@rapidhealthconnect.org' class='btn btn-primary text-center'>Mail-Us</a></p>
               </div>`;
+            emailjs.init('9y2-7nt7W0n40tp2k')
             emailjs.send("service_nywgfzp", "template_5oej7kb", {
               subject: "There was an Error in Sending the Form data",
               message: `Hello RHC.org, we regret to inform that due to technical glitch we are not able to reach the user's data <b>(Contact Form)</b> to you, please contact the technical team as soon as possible, Thank you.`,
